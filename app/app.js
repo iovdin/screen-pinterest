@@ -12,23 +12,23 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
 import FontFaceObserver from 'fontfaceobserver';
-import createHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
+import sagas from './sagas'
+import reducers from './reducers'
+import createSagaMiddleware from 'redux-saga'
+import { createStore, applyMiddleware } from 'redux'
 
 // Import root app
 import App from 'containers/App';
 
 // Load the favicon
 /* eslint-disable import/no-webpack-loader-syntax */
-import '!file-loader?name=[name].[ext]!./images/favicon.ico';
+import '!file-loader?name=[name].[ext]!./images/favicon.png';
 /* eslint-enable import/no-webpack-loader-syntax */
 
 // Import CSS reset and Global Styles
 import 'styles/theme.scss';
-
-import configureStore from './configureStore';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
@@ -41,20 +41,20 @@ openSansObserver.load().then(() => {
   document.body.classList.remove('fontLoaded');
 });
 
-// Create redux store with history
-const initialState = {};
-const history = createHistory();
-const store = configureStore(initialState, history);
-const MOUNT_NODE = document.getElementById('app');
+PDK.init({
+  appId: "4796926116780576629",
+  cookie: true
+});
 
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(reducers, applyMiddleware(/* logger, */ sagaMiddleware))
+sagaMiddleware.run(sagas)
+
+const MOUNT_NODE = document.getElementById('app')
 const render = () => {
   ReactDOM.render(
     <Provider store={store}>
-      {/* <LanguageProvider messages={messages}> */}
-      <ConnectedRouter history={history}>
-        <App />
-      </ConnectedRouter>
-      {/* </LanguageProvider> */}
+      <App />
     </Provider>,
     MOUNT_NODE
   );

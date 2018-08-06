@@ -1,7 +1,8 @@
-html,
-body {
+html, body, #app {
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -11,15 +12,94 @@ body {
 body.fontLoaded {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-
-#app {
-  background-color: #fafafa;
-  min-height: 100%;
-  min-width: 100%;
-}
-
-p,
-label {
+p, label {
   font-family: Georgia, Times, 'Times New Roman', serif;
   line-height: 1.5em;
+}
+
+.error { 
+  color: red;
+}
+
+button {
+  font-size: 2em;
+  background: rgb(253, 207, 0);
+  border: none;
+  padding: 0.4em 1.2em;
+}
+
+.center-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.slide {
+  position: fixed;
+  width: 100%;
+}
+
+.slide p {
+  font-size: 2em;
+  margin: 0;
+  padding: 1em;
+  text-align: center;
+}
+@media (min-aspect-ratio: 6/5) {
+  .slide {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch; 
+    align-items: center;
+    height: 100vh;
+  }
+
+  .slide img {
+    height: 100vh;
+    object-fit: cover;
+    flex: 60%;
+  }
+
+  .slide p {
+    flex: 40%;
+  }
+}
+@media (max-aspect-ratio: 6/5) {
+  .slide {
+    height: 100%;
+  }
+
+  .slide img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    //object-position: 0 50%;
+  }
+
+  .slide p {
+    position: fixed;
+    bottom: 0;
+    color: white;
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    min-height: 20%;
+  }
+}
+
+// slider animation
+.slide-enter {
+  opacity: 0.01;
+}
+.slide-enter.slide-enter-active {
+  opacity: 1;
+  transition: opacity 500ms linear;
+}
+
+.slide-leave {
+  opacity: 1;
+}
+.slide-leave.slide-leave-active {
+  opacity: 0.01;
+  transition: opacity 500ms linear;
 }

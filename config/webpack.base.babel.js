@@ -9,7 +9,7 @@ process.noDeprecation = true;
 
 module.exports = (options) => ({
   mode: options.mode,
-  entry: options.entry,
+  entry: [path.join(process.cwd(), 'app/pdk.js')].concat(options.entry),
   output: Object.assign({ // Compile into js/build.js
     path: path.resolve(process.cwd(), 'build'),
     publicPath: '/',
@@ -98,7 +98,7 @@ module.exports = (options) => ({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       },
-    })
+    }),
   ]),
   resolve: {
     modules: ['app', 'node_modules'],

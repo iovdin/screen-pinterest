@@ -15,13 +15,14 @@ const logger = {
   },
 
   // Called when express.js app starts on given port w/o errors
-  appStarted: (port, host) => {
+  appStarted: (port, host, secure) => {
     console.log(`Server started ! ${chalk.green('✓')}`);
+    const secChar = secure ? 's' : '';
 
     console.log(`
 ${chalk.bold('Access URLs:')}${divider}
-Localhost: ${chalk.magenta(`http://${host}:${port}`)}
-      LAN: ${chalk.magenta(`http://${ip.address()}:${port}`)}${divider}
+Localhost: ${chalk.magenta(`http${secChar}://${host}:${port}`)}
+      LAN: ${chalk.magenta(`http${secChar}://${ip.address()}:${port}`)}${divider}
 ${chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)}
     `);
   }
